@@ -10,33 +10,44 @@
 //       setTimeout(function () {
 //         if (i === 13) return reject(new Error("Oh my god"));
 //         if (i > 0) console.log(i + '...');
-//         else resolve(console.log("Go!"))
+//         else resolve(console.log("Go!")) // i === 0에서 찍히겠지
 //       }, (seconds - i) * 1000)
 //     }
 //   })
 // }
 
 // * promise에서 지원하는 핸들러: then, catch
-// const p = countdown(13)
-// p
-//   .then(function () {
+// const p = countdown(13);
+// p.then(
+//   function () {
 //     console.log('성공')
-//   }, function (err) {
+//   },
+//   function (err) {
 //     console.log('실패', err)
-//   });
-// p
-//   .catch(function (err) {
-//     console.log(`countdown experienced an error: ${err.message}`)
-//   })
+//   }
+// )
+// p.catch(function (err) { // error 발생시
+//   console.log('catch 에러', err.message)
+// })
+
+
+// - resolve만 넣고, resolve를 안넣으면 알아서 catch로 연결됨
+// const p = countdown(13);
+// p.then(
+//   function () {
+//     console.log('성공')
+//   }
+// ).catch(function (err) { // error 발생시
+//   console.log('catch 에러', err.message)
+// })
 
 
 
 // * EventEmitter를 사용해보자
 // - 함수와 사용해도 되지만, 원래는 클래스와 함께 사용하도록 설계되었음.
 
-// const EventEmmiter = require('events').EventEmitter;
-
-// class Countdown extends EventEmmiter {
+// const EventEmitter = require('events').EventEmitter;
+// class Countdown extends EventEmitter {
 //   constructor(seconds, superstitious) {
 //     super();
 //     this.seconds = seconds;
@@ -59,6 +70,45 @@
 //   }
 // }
 
+// const c = new Countdown(15, true);
+// c.on('tick', function (i) {
+//   if (i > 0) console.log(i + '...');
+// })
+// c.go()
+//   .then(function () {
+//     console.log('RESOLVE: GO!')
+//   })
+//   .catch(function (err) {
+//     console.error('CATCH', err.message)
+//   })
+
+
+// * reject나 resolve는 함수를 멈추지는 않는다. (그저 promise의 상태를 관리할 뿐)
+//   - 더 진행할 수 없다는 사실을 아는 즉시 대기 중인 타임아웃 취소해서 함수를 멈추는 예제
+// const EventEmitter = require('events').EventEmitter;
+// class Countdown extends EventEmitter {
+//   constructor(seconds, superstitious) {
+//     super();
+//     this.seconds = seconds;
+//     this.superstitious = !!superstitious;
+//   }
+//   go() {
+//     const countdown = this;
+//     const timeoutIds = [];
+//     return new Promise(function (resolve, reject) {
+//       for (let i = countdown.seconds; i >= 0; i--) {
+//         timeoutIds.push(setTimeout(function () {
+//           if (countdown.superstitious && i === 13) {
+//             timeoutIds.forEach(clearTimeout);
+//             return reject(new Error('Oh my god'));
+//           }
+//           countdown.emit('tick', i);
+//           if (i === 0) resolve();
+//         }, (countdown.seconds - i) * 1000))
+//       }
+//     })
+//   }
+// }
 
 // const c = new Countdown(15, true);
 // c.on('tick', function (i) {
@@ -78,45 +128,21 @@
 
 
 
-// * 더 진행할 수 없다는 사실을 아는 즉시 대기 중인 타임아웃 취소
-const EventEmmiter = require('events').EventEmitter;
 
-class Countdown extends EventEmmiter {
-  constructor(seconds, superstitious) {
-    super();
-    this.seconds = seconds;
-    this.superstitious = !!superstitious;
-  }
+//  * promise 체인
+// function launch() {
+//   return new Promise(function (resolve, reject) {
+//     console.log("Lift off!");
+//     setTimeout(function () {
+//       resolve("In orbit!");
+//     }, 2 * 1000)
+//   })
+// }
 
-  go() {
-    const countdown = this;
-    const timeoutIds = [];
-    return new Promise(function (resolve, reject) {
-      for (let i = countdown.seconds; i >= 0; i--) {
-        timeoutIds.push(setTimeout(function () {
-          if (countdown.superstitious && i === 13) {
-            timeoutIds.forEach(clearTimeout);
-            return reject(new Error("Oh my god"))
-          }
-          countdown.emit('tick', i);
-          if (i === 0) resolve();
-        }, (countdown.seconds - i) * 1000))
+// const c = new Countdown(15)
+//   .on('tick', i => console.log(i + '...'));
 
-      }
-    })
-  }
-}
-
-
-const c = new Countdown(15, true);
-c.on('tick', function (i) {
-  if (i > 0) console.log(i + '...')
-})
-
-c.go()
-  .then(function () {
-    console.log('Go!')
-  })
-  .catch(function (err) {
-    console.error('ERROR 발생: ', err.message);
-  })
+// c.go()
+//   .then(launch)
+//   .then(function (msg) { console.log(msg) })
+//   .catch(function (err) { console.error("Huston, we have a problem...") })
