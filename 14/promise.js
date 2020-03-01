@@ -146,3 +146,46 @@
 //   .then(launch)
 //   .then(function (msg) { console.log(msg) })
 //   .catch(function (err) { console.error("Huston, we have a problem...") })
+
+
+
+
+// *  결정되지 않은 promise의 예
+// function launch() {
+//   return new Promise(function (resolve, reject) {
+//     if (Math.random() < 0.5) return; // reject를 호출하지 않으며, 게다가 console에 에러를 찍지도 않음
+//     console.log("Lift off!");
+//     setTimeout(function () {
+//       resolve("In orbit!");
+//     }, 2 * 1000)
+//   })
+// }
+
+// - 결정되지 않은 promise의 경우, 타임아웃을 걸어 문제를 해결 할 수도 있긴 하다. (좋은 방법은 아닌것 같지만)
+// function addTimeout(fn, timeout) {
+//   if (timeout === undefined) timeout = 1000;
+//   return function (...args) {
+//     return new Promise(function (resolve, reject) {
+//       const tid = setTimeout(reject, timeout, newError("promise timed out"));
+//       fn(...args)
+//         .then(function (...args) {
+//           clearTimeout(tid);
+//           resolve(...args)
+//         })
+//         .catch(function (...args) {
+//           clearTimeout(tid);
+//           reject(...args)
+//         })
+//     })
+//   }
+// }
+
+
+// const c = new Countdown(15)
+//   .on('tick', i => console.log(i + '...'));
+
+// c.go()
+//   .then(addTimeout(launch, 11 * 1000))
+//   .then(function (msg) { console.log(msg) })
+//   .catch(function (err) { console.error("Huston, we have a problem...") })
+
