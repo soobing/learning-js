@@ -27,12 +27,63 @@
 // }
 
 // ex2) i를 for루프와 같은 스코프에 선언 => 5, 4, 3, 2, 1이 찍힘
-function countdown() {
-  console.log("CountDown: ");
-  for (let i = 5; i >= 0; i--) {
-    setTimeout(function () {
-      console.log(i === 0 ? "GO!" : i);
-    }, (5 - i) * 1000)
-  }
-}
-countdown();
+// function countdown() {
+//   console.log("CountDown: ");
+//   for (let i = 5; i >= 0; i--) {
+//     setTimeout(function () {
+//       console.log(i === 0 ? "GO!" : i);
+//     }, (5 - i) * 1000)
+//   }
+// }
+// countdown();
+
+
+
+
+
+
+// * 오류 우선 콜백
+// - 프라미스를 사용하지 않으면 오류 우선 콜백은 노드 개발의 표준이나 다름 없음.
+// const fs = require('fs');
+// const fname = 'may_or_may_not_exist.txt';
+// fs.readFile(fname, function (err, data) {
+//   if (err) return console.error(`error reading file ${fname}: ${err.message}`);
+//   console.log(`${fname} contents: ${data}`);
+// })
+
+
+
+
+
+// * 콜백 헬
+// ex1)
+// const fs = require('fs');
+// fs.readFile('a.txt', function (err, dataA) {
+//   if (err) console.error(err);
+//   fs.readFile('b.txt', function (err, dataB) {
+//     if (err) console.error(err);
+//     fs.readFile('c.txt', function (err, dataC) {
+//       if (err) console.error(err);
+//       setTimeout(function () {
+//         fs.writeFile('d.txt', dataA + dataB + dataC, function (err) {
+//           if (err) console.log(err);
+//         })
+//       }, 60 * 1000)
+//     })
+//   })
+// })
+
+
+// ex2)
+// const fs = require('fs');
+// function readSketchyFile() {
+//   try {
+//     fs.readFile('does_not_exist.txt', function (err, data) {
+//       if (err) throw err;
+//     })
+//   } catch (err) {
+//     console.log('warning: minor issue occurred, program continuing');
+//   }
+// }
+
+// readSketchyFile();
