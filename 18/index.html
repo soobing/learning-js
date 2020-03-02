@@ -17,6 +17,11 @@
       padding: 1px 4px;
       font-family: monospace;
     }
+
+    .highlight {
+      background: #ff0;
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -62,6 +67,59 @@
     // paragraphsArr.forEach(item => {
     //   console.log(item)
     // })
+
+
+
+    // * DOM 요소 쿼리
+    // - 다른 요소와의 관계를 사용해 원하는 요소를 찾는 범용적인 메서드
+    // - querySelector, querySelectorAll : css 선택자를 사용해 요소를 찾는 메서드
+    // console.log(document.querySelectorAll('.callout'));
+    // console.log(document.querySelector('#content > p'));
+
+
+
+    // * DOM 요소 조작
+    // const para1 = document.getElementsByTagName('p')[0];
+    // para1.textContent;
+    // para1.innerHTML;
+    // para1.textContent = 'Modified HTML file';
+    // para1.innerHTML = "Modified HTML file";
+
+
+
+    // * 새 DOM 요소 만들기
+    // const p1 = document.createElement('p');
+    // const p2 = document.createElement('p');
+    // p1.textContent = 'I was created dynamically';
+    // p2.textContent = 'I was also created dynamically';
+
+    // const parent = document.getElementById('content');
+    // const firstChild = parent.childNodes[0];
+
+    // parent.insertBefore(p1, firstChild);
+    // parent.appendChild(p2);
+
+
+    // * 요소 스타일링
+    // function highlightParas(containing) {
+    //   if (typeof containing === 'string')
+    //     containing = new RegExp(`\\b${containing}\\b`, 'i');
+    //   const paras = document.getElementsByTagName('p');
+    //   console.log(paras);
+    //   for (let p of paras) {
+    //     if (!containing.test(p.textContent)) continue;
+    //     p.classList.add('highlight');
+    //   }
+    // }
+
+    // highlightParas('unique')
+
+    // function removeParaHighlights() {
+    //   const paras = document.querySelectorAll('p.highlight');
+    //   for (let p of paras) {
+    //     p.classList.remove('highlight');
+    //   }
+    // }
   </script>
 </body>
 
