@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Simple HTML</title>
+  <style>
+    .callout {
+      border: solid 1px #ff0080;
+      margin: 2px 4px;
+      padding: 2px 6px;
+    }
+
+    .code {
+      background: #ccc;
+      margin: 1px 2px;
+      padding: 1px 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Simple HTML</h1>
+  </header>
+  <div id="content">
+    <p>This is a <i>simple</i> HTML file.</p>
+    <div class="callout">
+      <p>This is as fancy as we'll get!</p>
+    </div>
+    <p>IDs (such as <span class="code">#content</span>)
+      ar uique (there can only be one per page).</p>
+    <p>Classes (such as <span class="code">.callout</span>)
+      can be used on many elements.</p>
+    <div id="callout2" class="callout fancy">
+      <p>A single HTML element can have multiple classes.</p>
+    </div>
+  </div>
+  <script>
+    // * 재귀함수로 DOM 전체 순회
+    // function printDOM(node, prefix) {
+    //   console.log(prefix + node.nodeName);
+    //   for (let i = 0; i < node.childNodes.length; i++) {
+    //     printDOM(node.childNodes[i], prefix + '\t')
+    //   }
+    // }
+    // printDOM(document, '');
+
+
+
+    // * get 메서드
+    // - getElementById
+    // - getElementsByClassName
+    // - getElementsByTagName
+    // - 주의: DOM 메서드가 반환하는 컬렉션은 JS 배열이 아니라 HTMLCollection의 인스턴스로, 배열 비슷한 객체임.
+    // - 그래서 for루프는 사용가능하지만, map, filter, reduce와 같은 Array.prototype 메서드는 사용할 수 없음.
+    // - [...document.getElementsByTagName(p)] 처럼 사용하여 HTMLCollection -> JS Array로 변경 가능
+    // const paragraphs = document.getElementsByTagName('p');
+    // const paragraphsArr = [...paragraphs];
+    // console.log(paragraphs);
+    // paragraphsArr.forEach(item => {
+    //   console.log(item)
+    // })
+  </script>
+</body>
+
+</html>
