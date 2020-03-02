@@ -37,7 +37,7 @@ function* theFutureIsNow() {
   yield nfcall(fs.wirte, 'd.txt', data[0] + data[1] + data[2]);
 }
 
-// - try...catch 문과 함께
+// - try...catch 문과 함께 사용
 function* theFutureIsNow() {
   let data;
   try {
