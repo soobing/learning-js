@@ -1,0 +1,82 @@
+<!-- event bubbling & capturing -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Event Propagation</title>
+</head>
+
+<body>
+  <div>
+    <button>Click Me!</button>
+  </div>
+  <script>
+    // * 이벤트 헨들러를 반들어 반환합니다.
+    function logEvent(handlerName, type, cancel, stop, stopImmediate) {
+      return function (evt) {
+        if (cancel) evt.preventDefault();
+        if (stop) evt.stopPropagation();
+        if (stopImmediate) evt.stopImmediatePropagation();
+        console.log(`${type}: ${handlerName}` + (evt.defaultPrevented ? ' (canceled)' : ''));
+      }
+    }
+
+    // * 이벤트 핸들러를 요소에 추가
+    function addEventLogger(elt, type, action) {
+      const capture = type === 'capture';
+      elt.addEventListener('click',
+        logEvent(elt.tagName, type, action === 'cancel', action === 'stop', action === 'stop!'),
+        capture)
+    }
+    const body = document.querySelector('body');
+    const div = document.querySelector('div');
+    const button = document.querySelector('button');
+
+    // 예재1) 기본 이벤트 전달
+    // - 캡쳐링(위->아래)이 시작 되고, 버블링(아래 -> 위)로 이어짐
+    // addEventLogger(body, 'capture');
+    // addEventLogger(body, 'bubble');
+    // addEventLogger(div, 'capture');
+    // addEventLogger(div, 'bubble');
+    // addEventLogger(button, 'capture');
+    // addEventLogger(button, 'bubble');
+
+    // 예제2) preventDafault()
+    // - 해당부분 아래로 이벤트 취소
+    // - 어떻게 취소? defaultPrvented 값을 true로 바꿔서. 즉 이벤트는 전달되지만, defaultPrevented 값이 true로 변경된 채 전달됨.
+    // addEventLogger(body, 'capture');
+    // addEventLogger(body, 'bubble');
+    // addEventLogger(div, 'capture', 'cancel');
+    // addEventLogger(div, 'bubble');
+    // addEventLogger(button, 'capture');
+    // addEventLogger(button, 'bubble');
+
+    // 예제3) stopPropagation()
+    // - 이벤트를 '현재요소(element)'에서 끝냄. 더는 전달 하지 않음.
+    // addEventLogger(body, 'capture');
+    // addEventLogger(body, 'bubble');
+    // addEventLogger(div, 'capture', 'cancel');
+    // addEventLogger(div, 'bubble');
+    // addEventLogger(button, 'capture', 'stop');
+    // addEventLogger(button, 'bubble');
+
+    // 예제4) stopImmediatePropagastion()
+    // - 현재 요소에서 연결된 이벤트 핸들러에게도 더는 전달 하지 않음.
+    // - stopPropagation은 현재 요소까지는 이벤트를 전달하였지만, stopImmediatePropagation은 현재 요소에게도 더이상 이벤트를 전달하지 않음.
+    // addEventLogger(body, 'capture');
+    // addEventLogger(body, 'bubble');
+    // addEventLogger(div, 'capture', 'cancel');
+    // addEventLogger(div, 'bubble');
+    // addEventLogger(button, 'capture', 'stop!');
+    // addEventLogger(button, 'bubble');
+
+
+
+    // * addEventListener vs 이벤트를 추가하는 구식방법 on
+    // - addEventListener는 이벤트를 추가하는 구식 방법인 'on' 프로퍼티를 대체할 목적으로 만들어 졌음.
+    // - 왜 대체? on으로 이벤트 핸들러를 추가하면, 이벤트에 단 한개의 핸들러만 추가할 수 있다는 단점이 있음.
+  </script>
+</body>
+
+</html>
