@@ -35,12 +35,18 @@
       <p>This is as fancy as we'll get!</p>
     </div>
     <p>IDs (such as <span class="code">#content</span>)
-      ar uique (there can only be one per page).</p>
+      ar unique (there can only be one per page).</p>
     <p>Classes (such as <span class="code">.callout</span>)
       can be used on many elements.</p>
     <div id="callout2" class="callout fancy">
       <p>A single HTML element can have multiple classes.</p>
     </div>
+    <button data-action='highlight' data-containing='unique'>
+      Highlight paragraphs containing "unique"
+    </button>
+    <button data-action='removeHighlights'>
+      Remove highlights
+    </button>
   </div>
   <script>
     // * 재귀함수로 DOM 전체 순회
@@ -119,6 +125,55 @@
     //   for (let p of paras) {
     //     p.classList.remove('highlight');
     //   }
+    // }`
+
+
+
+
+
+    // * 데이터 속성
+    // const highlightActions = document.querySelectorAll('[data-action="highlight"');
+    // highlightActions[0].dataset.containing = "giraffe";
+    // highlightActions[0].dataset.caseSensitive = "true";
+
+
+    // * 이벤트
+    // function highlightParas(containing) {
+    //   console.log(containing, typeof containing);
+    //   if (typeof containing === 'string')
+    //     containing = new RegExp(`\\b${containing}\\b`, 'i');
+    //   const paras = document.getElementsByTagName('p');
+    //   console.log(containing, paras);
+    //   for (let p of paras) {
+    //     console.log(containing.test(p.textContent));
+    //     if (!containing.test(p.textContent)) continue;
+    //     p.classList.add('highlight');
+    //   }
+    // }
+
+    // function removeParaHighlights() {
+    //   const paras = document.querySelectorAll('p.highlight');
+    //   for (let p of paras) {
+    //     p.classList.remove('highlight');
+    //   }
+    // }
+
+
+    // const highlightActions = document.querySelectorAll('[data-action="highlight"]');
+    // for (let a of highlightActions) {
+    //   a.addEventListener('click', evt => {
+    //     evt.preventDefault();
+    //     highlightParas(a.dataset.containing)
+    //   })
+    // }
+
+
+    // const removeHighlightActions = document.querySelectorAll('[data-action="removeHighlights"]');
+    // for (let a of removeHighlightActions) {
+    //   a.addEventListener('click', evt => {
+    //     evt.preventDefault();
+    //     removeParaHighlights();
+    //   })
     // }
   </script>
 </body>
