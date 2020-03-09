@@ -74,9 +74,10 @@
 
 
 // * 화살표 함수
+// - 화살표 함수의 어휘적 바인딩은 절대로 오버라이드 할 수 없다.
 function foo() {
   return a => {
-    console.log(this.a); // this느느 어휘적으로 foo()에서 상속 된다.
+    console.log(this.a); // this는 어휘적으로 foo()에서 상속 된다.
   }
 }
 var obj1 = { a: 2 };
