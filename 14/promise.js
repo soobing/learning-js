@@ -16,7 +16,7 @@
 //   })
 // }
 
-// * promise에서 지원하는 핸들러: then, catch
+// * promise에서 지원하는 핸들러: then, catch, finally
 // const p = countdown(13);
 // p.then(
 //   function () {
@@ -29,7 +29,9 @@
 // p.catch(function (err) { // error 발생시
 //   console.log('catch 에러', err.message)
 // })
-
+// p.finally(function () { // reject or resolve가 호출될 경우(settled된 상태때 반환)
+//   console.log('finally!)
+// })
 
 // - resolve만 넣고, resolve를 안넣으면 알아서 catch로 연결됨
 // const p = countdown(13);
